@@ -10,37 +10,28 @@
 #include <coreplugin/icore.h>
 #include <coreplugin/imode.h>
 #include <utils/icon.h>
+#include <utils/filepath.h>
 #include <coreplugin/actionmanager/actionmanager.h>
 
 using namespace QtcDbViewer::Internal;
 
 const Utils::Icon MODE_DATABASE_CLASSIC (
-  QLatin1String (":/icons/database.png"));
-const Utils::Icon MODE_DATABASE_FLAT ({
-  {QLatin1String (":/icons/database_mask.png"), Utils::Theme::IconsBaseColor}
-});
-const Utils::Icon MODE_DATABASE_FLAT_ACTIVE ({
-  {QLatin1String (":/icons/database_mask.png"), Utils::Theme::IconsModeDesignActiveColor}
-});
+  Utils::FilePath::fromString (QLatin1String (":/icons/database.png")));
+
+static QList<Utils::IconMaskAndColor> flatIconData () {
+  return {{Utils::FilePath::fromString (QLatin1String (":/icons/database_mask.png")), Utils::Theme::IconsBaseColor}};
+}
+
+const Utils::Icon MODE_DATABASE_FLAT (flatIconData ());
 
 QtcDbViewerPlugin::QtcDbViewerPlugin () :
   IPlugin () {
-  // Create your members
 }
 
 QtcDbViewerPlugin::~QtcDbViewerPlugin () {
-  // Unregister objects from the plugin manager's object pool
-  // Delete members
 }
 
 bool QtcDbViewerPlugin::initialize (const QStringList &arguments, QString *errorString) {
-  // Register objects in the plugin manager's object pool
-  // Load settings
-  // Add actions to menus
-  // Connect to other plugins' signals
-  // In the initialize function, a plugin can be sure that the plugins it
-  // depends on have initialized their members.
-
   Q_UNUSED (arguments)
   Q_UNUSED (errorString)
 
@@ -75,8 +66,8 @@ bool QtcDbViewerPlugin::initialize (const QStringList &arguments, QString *error
   dbViewMode->setId (Constants::QTCDBVIEWER_ID);
   dbViewMode->setContext (context);
   dbViewMode->setDisplayName (tr ("Db Viewer"));
-  dbViewMode->setIcon (Utils::Icon::modeIcon (MODE_DATABASE_CLASSIC,
-                                              MODE_DATABASE_FLAT, MODE_DATABASE_FLAT_ACTIVE));
+  dbViewMode->setIcon (Utils::Icon::sideBarIcon (MODE_DATABASE_CLASSIC,
+                                                 MODE_DATABASE_FLAT));
   dbViewMode->setPriority (10);
   dbViewMode->setWidget (viewer);
 
@@ -87,8 +78,8 @@ void QtcDbViewerPlugin::initLanguage () {
   const QString &language = Core::ICore::userInterfaceLanguage ();
   if (!language.isEmpty ()) {
     QStringList paths;
-    paths << Core::ICore::resourcePath ().toString ()
-          << Core::ICore::userResourcePath ().toString ();
+    paths << Core::ICore::resourcePath ().toUrlishString ()
+          << Core::ICore::userResourcePath ().toUrlishString ();
     const QString &trFile = QLatin1String ("QtcDbViewer_") + language;
     QTranslator *translator = new QTranslator (this);
     foreach (const QString &path, paths) {
@@ -101,14 +92,8 @@ void QtcDbViewerPlugin::initLanguage () {
 }
 
 void QtcDbViewerPlugin::extensionsInitialized () {
-  // Retrieve objects from the plugin manager's object pool
-  // In the extensionsInitialized function, a plugin can be sure that all
-  // plugins that depend on it are completely initialized.
 }
 
 ExtensionSystem::IPlugin::ShutdownFlag QtcDbViewerPlugin::aboutToShutdown () {
-  // Save settings
-  // Disconnect from signals that are not needed during shutdown
-  // Hide UI (if you add UI that is not in the main window directly)
   return SynchronousShutdown;
 }

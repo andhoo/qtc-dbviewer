@@ -36,7 +36,7 @@ class SqlFieldDelegate : public QStyledItemDelegate {
 
   public:
     QString displayText (const QVariant &value, const QLocale & /*locale*/) const {
-      if (value.type () != QVariant::ByteArray) {
+      if (value.typeId () != QMetaType::QByteArray) {
         return value.toString ();
       }
       QString stringed = value.toString ();
@@ -278,7 +278,7 @@ class WMain : public QWidget, public Ui::WMain {
       contextmenu.addAction (action_DownloadRaw);
       contextmenu.addAction (action_UploadRaw);
       QModelIndex index = dataTable->indexAt (position);
-      bool isRaw = (index.isValid () && index.data ().type () == QVariant::ByteArray);
+      bool isRaw = (index.isValid () && index.data ().typeId () == QMetaType::QByteArray);
       action_DownloadRaw->setEnabled (isRaw);
       action_UploadRaw->setEnabled (isRaw);
 
@@ -514,9 +514,9 @@ class WMain : public QWidget, public Ui::WMain {
     }
 
     void quoteQueryString () {
-      auto quote =  ('\"');
-      auto eol =  ('\n');
-      auto slash =  ('\\');
+      QString quote = QStringLiteral ("\"");
+      QString eol = QStringLiteral ("\n");
+      QString slash = QStringLiteral ("\\");
       QString result = editQuery->toPlainText ().replace (quote, slash + quote);
       result = quote + result.replace (eol, quote + eol + quote) + quote;
       setEditQueryText (result);

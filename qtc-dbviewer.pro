@@ -4,6 +4,21 @@ VERSION_SUFFIX = ""
 
 include(paths.pri)
 
+# Qt Creator include paths
+INCLUDEPATH += C:/Qt/Tools/QtCreator/include/qtcreator/src/libs
+INCLUDEPATH += C:/Qt/Tools/QtCreator/include/qtcreator/src/plugins
+INCLUDEPATH += C:/Qt/Tools/QtCreator/include/qtcreator/src/share
+
+# Build as shared library (plugin)
+TEMPLATE = lib
+CONFIG += plugin
+
+# Qt Creator lib paths - use MinGW import libs
+# (MSVC .lib files are removed - using custom generated .a files from paths.pri)
+
+# Add -Wl,--enable-auto-import for implicit DLL linking
+QMAKE_LFLAGS += -Wl,--enable-auto-import
+
 # QtcDbViewer files
 
 include (3rd-party/QtSqlView/src/src.pri)
@@ -51,4 +66,4 @@ QTC_PLUGIN_RECOMMENDS += \
 
 ###### End _dependencies.pri contents ######
 
-include($$QTCREATOR_SOURCES/src/qtcreatorplugin.pri)
+# Plugin metadata is defined in the source file

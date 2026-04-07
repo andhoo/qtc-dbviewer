@@ -11,3 +11,23 @@
 *.tar.bz2
 .vscode
 __pycache__
+
+# Qt/qmake build output:
+build/
+debug/
+release/
+Makefile*
+*.o
+moc_*.cpp
+qrc_*.cpp
+ui_*.h
+.qmake.stash
+lib*.a
+*.def
+
+# Qt Creator:
+.qtcreator/
+QtcDbViewer.json
+
+# Overig:
+nul

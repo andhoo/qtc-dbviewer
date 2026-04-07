@@ -8,7 +8,7 @@
 #define _SQLHighlighter_H_
 
 #include <QtCore/QVector>
-#include <QtCore/QRegExp>
+#include <QRegularExpression>
 
 #include <QtGui/QSyntaxHighlighter>
 #include <QtGui/QTextCharFormat>
@@ -24,21 +24,21 @@ class SQLHighlighter : public QSyntaxHighlighter {
 
   private:
     struct Rule {
-      QRegExp pattern;
+      QRegularExpression pattern;
       QTextCharFormat format;
 
       inline Rule () {
       }
 
       inline Rule (QString p, QTextCharFormat f)
-        : pattern (p, Qt::CaseInsensitive), format (f) {
+        : pattern (p, QRegularExpression::CaseInsensitiveOption), format (f) {
       }
     };
 
     QVector<Rule>   rules;
 
-    QRegExp commentStartExpression;
-    QRegExp commentEndExpression;
+    QRegularExpression commentStartExpression;
+    QRegularExpression commentEndExpression;
 
     QTextCharFormat commentFormat;
 };

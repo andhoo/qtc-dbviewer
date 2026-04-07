@@ -29,6 +29,8 @@
 #include "DbTypes.h"
 
 #include <coreplugin/icore.h>
+#include <utils/qtcsettings.h>
+#include <utils/storekey.h>
 
 struct DbParameter {
   QString label;
@@ -42,32 +44,32 @@ struct DbParameter {
   int showsystables;
   QString connectOptions;
 
-  void saveToSettings (QSettings &settings) const {
-    settings.setValue (QStringLiteral ("label"), label);
-    settings.setValue (QStringLiteral ("hostname"), hostname);
-    settings.setValue (QStringLiteral ("port"), port);
-    settings.setValue (QStringLiteral ("driver"), driver);
-    settings.setValue (QStringLiteral ("username"), username);
+  void saveToSettings (Utils::QtcSettings &settings) const {
+    settings.setValue (Utils::Key ("label"), label);
+    settings.setValue (Utils::Key ("hostname"), hostname);
+    settings.setValue (Utils::Key ("port"), port);
+    settings.setValue (Utils::Key ("driver"), driver);
+    settings.setValue (Utils::Key ("username"), username);
     if (!askpassword) {
-      settings.setValue (QStringLiteral ("password"), password);
+      settings.setValue (Utils::Key ("password"), password);
     }
-    settings.setValue (QStringLiteral ("askpassword"), askpassword);
-    settings.setValue (QStringLiteral ("database"), database);
-    settings.setValue (QStringLiteral ("showsystables"), showsystables);
-    settings.setValue (QStringLiteral ("connectoptions"), connectOptions);
+    settings.setValue (Utils::Key ("askpassword"), askpassword);
+    settings.setValue (Utils::Key ("database"), database);
+    settings.setValue (Utils::Key ("showsystables"), showsystables);
+    settings.setValue (Utils::Key ("connectoptions"), connectOptions);
   }
 
-  void loadFromSettings (QSettings &settings) {
-    label = settings.value (QStringLiteral ("label")).toString ();
-    hostname = settings.value (QStringLiteral ("hostname")).toString ();
-    port = settings.value (QStringLiteral ("port"), 0).toUInt ();
-    driver = settings.value (QStringLiteral ("driver")).toString ();
-    username = settings.value (QStringLiteral ("username")).toString ();
-    password = settings.value (QStringLiteral ("password")).toString ();
-    askpassword = settings.value (QStringLiteral ("askpassword"), 0).toUInt ();
-    database = settings.value (QStringLiteral ("database")).toString ();
-    showsystables = settings.value (QStringLiteral ("showsystables"), 0).toUInt ();
-    connectOptions = settings.value (QStringLiteral ("connectoptions")).toString ();
+  void loadFromSettings (Utils::QtcSettings &settings) {
+    label = settings.value (Utils::Key ("label")).toString ();
+    hostname = settings.value (Utils::Key ("hostname")).toString ();
+    port = settings.value (Utils::Key ("port"), 0).toUInt ();
+    driver = settings.value (Utils::Key ("driver")).toString ();
+    username = settings.value (Utils::Key ("username")).toString ();
+    password = settings.value (Utils::Key ("password")).toString ();
+    askpassword = settings.value (Utils::Key ("askpassword"), 0).toUInt ();
+    database = settings.value (Utils::Key ("database")).toString ();
+    showsystables = settings.value (Utils::Key ("showsystables"), 0).toUInt ();
+    connectOptions = settings.value (Utils::Key ("connectoptions")).toString ();
   }
 };
 
@@ -226,35 +228,35 @@ class DbList : public QAbstractItemModel {
     /// save all database parameters to settings
     void saveToSettings () {
       Q_ASSERT (Core::ICore::settings () != NULL);
-      QSettings &settings = *(Core::ICore::settings ());
+      Utils::QtcSettings *settings = Core::ICore::settings ();
 
-      settings.beginWriteArray (QStringLiteral ("connections"));
+      settings->beginWriteArray (QStringLiteral ("connections"));
       int i = 0;
       Q_FOREACH (const DbConnection * dbc, list) {
-        settings.setArrayIndex (i++);
+        settings->setArrayIndex (i++);
 
-        dbc->dbparam.saveToSettings (settings);
+        dbc->dbparam.saveToSettings (*settings);
       }
-      settings.endArray ();
+      settings->endArray ();
     }
 
     /// load all database parameters from settings
     void loadFromSettings () {
       Q_ASSERT (Core::ICore::settings () != NULL);
-      QSettings &settings = *(Core::ICore::settings ());
+      Utils::QtcSettings *settings = Core::ICore::settings ();
 
       clear ();
 
-      int connnum = settings.beginReadArray (QStringLiteral ("connections"));
+      int connnum = settings->beginReadArray (QStringLiteral ("connections"));
       for (int i = 0; i < connnum; ++i) {
-        settings.setArrayIndex (i);
+        settings->setArrayIndex (i);
 
         DbParameter dbp;
-        dbp.loadFromSettings (settings);
+        dbp.loadFromSettings (*settings);
 
         list.push_back (new DbConnection (dbp) );
       }
-      settings.endArray ();
+      settings->endArray ();
     }
 
   public: // *** implements QAbstractItemModel
@@ -337,7 +339,7 @@ class DbList : public QAbstractItemModel {
         }
         else if (role == Qt::DecorationRole) {
           static QIcon dbicon (QStringLiteral (":/img/database.png"));
-          return qVariantFromValue (dbicon);
+          return QVariant::fromValue (dbicon);
         }
       }
       else if (const DbTable *dbt = qobject_cast<const DbTable *>(obj)) {
@@ -350,13 +352,13 @@ class DbList : public QAbstractItemModel {
           static QIcon viewicon (QStringLiteral (":/img/view.png"));
 
           if (dbt->tabletype == 0) {
-            return qVariantFromValue (tableicon);
+            return QVariant::fromValue (tableicon);
           }
           else if (dbt->tabletype == 1) {
-            return qVariantFromValue (viewicon);
+            return QVariant::fromValue (viewicon);
           }
           else if (dbt->tabletype == 2) {
-            return qVariantFromValue (tablesysicon);
+            return QVariant::fromValue (tablesysicon);
           }
         }
       }
@@ -371,7 +373,7 @@ class DbList : public QAbstractItemModel {
         }
         else if (role == Qt::DecorationRole) {
           static QIcon erroricon (QStringLiteral (":/img/error.png"));
-          return qVariantFromValue (erroricon);
+          return QVariant::fromValue (erroricon);
         }
       }
 
@@ -656,7 +658,7 @@ class DbSchemaModel : public QAbstractTableModel {
             return field.name ();
 
           case 1:
-            return QLatin1String (QVariant::typeToName (field.type ()));
+            return QLatin1String (QMetaType(field.metaType()).name());
 
           case 2:
             return field.length ();

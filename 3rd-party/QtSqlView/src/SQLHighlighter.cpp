@@ -15,8 +15,8 @@ SQLHighlighter::SQLHighlighter (class QTextDocument *parent)
 
     rules.push_back (Rule (QStringLiteral ("--[^\n]*"), commentFormat) );
 
-    commentStartExpression = QRegExp (QStringLiteral ("/\\*"));
-    commentEndExpression = QRegExp (QStringLiteral ("\\*/"));
+    commentStartExpression = QRegularExpression (QStringLiteral ("/\\*"));
+    commentEndExpression = QRegularExpression (QStringLiteral ("\\*/"));
   }
 
   {   // quoted strings
@@ -67,12 +67,13 @@ SQLHighlighter::SQLHighlighter (class QTextDocument *parent)
 
 void SQLHighlighter::highlightBlock (const QString &text) {
   Q_FOREACH (Rule rule, rules) {
-    QRegExp expr = rule.pattern;
-    int index = text.indexOf (expr);
-    while (index >= 0) {
-      int length = expr.matchedLength ();
+    QRegularExpression expr = rule.pattern;
+    QRegularExpressionMatch match = expr.match(text);
+    while (match.hasMatch()) {
+      int index = match.capturedStart();
+      int length = match.capturedLength();
       setFormat (index, length, rule.format);
-      index = text.indexOf (expr, index + length);
+      match = expr.match(text, index + length);
     }
   }
 
@@ -84,7 +85,8 @@ void SQLHighlighter::highlightBlock (const QString &text) {
   }
 
   while (startIndex >= 0) {
-    int endIndex = text.indexOf (commentEndExpression, startIndex);
+    QRegularExpressionMatch endMatch = commentEndExpression.match(text, startIndex);
+    int endIndex = endMatch.capturedStart();
     int commentLength;
     if (endIndex == -1) {
       setCurrentBlockState (1);
@@ -92,7 +94,7 @@ void SQLHighlighter::highlightBlock (const QString &text) {
     }
     else {
       commentLength = endIndex - startIndex
-                      + commentEndExpression.matchedLength ();
+                      + endMatch.capturedLength ();
     }
     setFormat (startIndex, commentLength, commentFormat);
     startIndex = text.indexOf (commentStartExpression,

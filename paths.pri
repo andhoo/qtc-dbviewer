@@ -1,16 +1,16 @@
 ## set the QTC_SOURCE environment variable to override the setting here
+QTC_SOURCE = $$(QTC_SOURCE)
+isEmpty(QTC_SOURCE):QTC_SOURCE = C:/Qt/Tools/QtCreator/include/qtcreator/src
+
 QTCREATOR_SOURCES = $$(QTC_SOURCE)
-isEmpty(QTCREATOR_SOURCES):QTCREATOR_SOURCES=$$PWD/../qtcreator-latest/src
+isEmpty(QTCREATOR_SOURCES):QTCREATOR_SOURCES = C:/Qt/Tools/QtCreator/include/qtcreator/src
 
 ## set the QTC_BUILD environment variable to override the setting here
 IDE_BUILD_TREE = $$(QTC_BUILD)
-isEmpty(IDE_BUILD_TREE){
-    linux-g++:QMAKE_TARGET.arch = $$QMAKE_HOST.arch
-    linux-g++-32:QMAKE_TARGET.arch = x86
-    linux-g++-64:QMAKE_TARGET.arch = x86_64
+isEmpty(IDE_BUILD_TREE):IDE_BUILD_TREE = C:/Qt/Tools/QtCreator
 
-    IDE_BUILD_TREE=$$PWD/../qtcreator-latest/release-x64
-    CONFIG(debug, debug|release):IDE_BUILD_TREE=$$PWD/../qtcreator-latest/debug-x64
-    contains(QMAKE_TARGET.arch, x86):IDE_BUILD_TREE=$$PWD/../qtcreator-latest/release-x86
-    msvc:IDE_BUILD_TREE=$$PWD/../qtcreator-latest/release
-}
+## Custom import libraries for MinGW - use build directory path
+CUSTOM_IMPORT_LIBS = D:/Users/andre/Projects/Qt/qtc-dbviewer/build/import_libs
+LIBS += $$CUSTOM_IMPORT_LIBS/libExtensionSystem.a
+LIBS += $$CUSTOM_IMPORT_LIBS/libUtils.a
+LIBS += $$CUSTOM_IMPORT_LIBS/libCore.a
