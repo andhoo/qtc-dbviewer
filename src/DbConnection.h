@@ -5,26 +5,25 @@
 // showing the containing tables and the schema display model.
 //
 
-#ifndef _DbConnection_H_
-#define _DbConnection_H_
+#pragma once
 
-#include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlError>
-#include <QtSql/QSqlTableModel>
-#include <QtSql/QSqlRecord>
-#include <QtSql/QSqlField>
-#include <QtSql/QSqlIndex>
-#include <QtSql/QSqlQuery>
+#include <QSqlDatabase>
+#include <QSqlError>
+#include <QSqlTableModel>
+#include <QSqlRecord>
+#include <QSqlField>
+#include <QSqlIndex>
+#include <QSqlQuery>
 
-#include <QtGui/QIcon>
+#include <QIcon>
 #include <QHeaderView>
 #include <QMessageBox>
 #include <QInputDialog>
 
-#include <QtCore/QAbstractItemModel>
-#include <QtCore/QVector>
-#include <QtCore/QSettings>
-#include <QtCore/QUuid>
+#include <QAbstractItemModel>
+#include <QVector>
+#include <QSettings>
+#include <QUuid>
 
 #include "DbTypes.h"
 
@@ -166,22 +165,20 @@ class DbList : public QAbstractItemModel {
     QVector<DbConnection *>  list;
 
     /// correctly delete all dbconnections
-    void clear () {
-      if (!list.isEmpty ()) {
-        // first delete children, then the db entries. otherwise the model
-        // goes crazy
-        Q_FOREACH (DbConnection * dbc, list) {
-          dbc->disconnect (*this);
+    void clear() {
+      if (!list.isEmpty()) {
+        for (DbConnection *dbc : list) {
+          dbc->disconnect(*this);
         }
 
-        beginRemoveRows (QModelIndex (), 0, list.size () - 1);
+        beginRemoveRows(QModelIndex(), 0, list.size() - 1);
 
-        Q_FOREACH (DbConnection * dbc, list) {
+        for (DbConnection *dbc : list) {
           delete dbc;
         }
-        list.clear ();
+        list.clear();
 
-        endRemoveRows ();
+        endRemoveRows();
       }
     }
 
@@ -230,14 +227,14 @@ class DbList : public QAbstractItemModel {
       Q_ASSERT (Core::ICore::settings () != NULL);
       Utils::QtcSettings *settings = Core::ICore::settings ();
 
-      settings->beginWriteArray (QStringLiteral ("connections"));
+      settings->beginWriteArray(QStringLiteral("connections"));
       int i = 0;
-      Q_FOREACH (const DbConnection * dbc, list) {
-        settings->setArrayIndex (i++);
+      for (const DbConnection *dbc : list) {
+        settings->setArrayIndex(i++);
 
-        dbc->dbparam.saveToSettings (*settings);
+        dbc->dbparam.saveToSettings(*settings);
       }
-      settings->endArray ();
+      settings->endArray();
     }
 
     /// load all database parameters from settings
@@ -338,7 +335,7 @@ class DbList : public QAbstractItemModel {
           return dbc->dbparam.label;
         }
         else if (role == Qt::DecorationRole) {
-          static QIcon dbicon (QStringLiteral (":/img/database.png"));
+          static QIcon dbicon (QStringLiteral (":/icons/database.png"));
           return QVariant::fromValue (dbicon);
         }
       }
@@ -347,9 +344,9 @@ class DbList : public QAbstractItemModel {
           return dbt->tablename;
         }
         else if (role == Qt::DecorationRole) {
-          static QIcon tableicon (QStringLiteral (":/img/table.png"));
-          static QIcon tablesysicon (QStringLiteral (":/img/tablesys.png"));
-          static QIcon viewicon (QStringLiteral (":/img/view.png"));
+          static QIcon tableicon (QStringLiteral (":/icons/table.png"));
+          static QIcon tablesysicon (QStringLiteral (":/icons/tablesys.png"));
+          static QIcon viewicon (QStringLiteral (":/icons/view.png"));
 
           if (dbt->tabletype == 0) {
             return QVariant::fromValue (tableicon);
@@ -372,7 +369,7 @@ class DbList : public QAbstractItemModel {
           }
         }
         else if (role == Qt::DecorationRole) {
-          static QIcon erroricon (QStringLiteral (":/img/error.png"));
+          static QIcon erroricon (QStringLiteral (":/icons/error.png"));
           return QVariant::fromValue (erroricon);
         }
       }
@@ -497,12 +494,12 @@ class DbList : public QAbstractItemModel {
       }
     }
 
-    void refresh () {
-      Q_FOREACH (DbConnection * dbc, list) {
-        if (dbc->db.isOpen ()) {
-          tablelist_clear (*dbc);
+    void refresh() {
+      for (DbConnection *dbc : list) {
+        if (dbc->db.isOpen()) {
+          tablelist_clear(*dbc);
 
-          tablelist_load (*dbc);
+          tablelist_load(*dbc);
         }
       }
     }
@@ -510,16 +507,16 @@ class DbList : public QAbstractItemModel {
     // *** Tablelist Functions are located here, because they have to emit signals
 
     void tablelist_clear (class DbConnection &dbc) {
-      if (!dbc.tablelist.isEmpty ()) {
-        beginRemoveRows (createIndex (list.indexOf (&dbc), 0, &dbc),
-                         0, dbc.tablelist.size () - 1);
+      if (!dbc.tablelist.isEmpty()) {
+        beginRemoveRows(createIndex(list.indexOf(&dbc), 0, &dbc),
+                        0, dbc.tablelist.size() - 1);
 
-        Q_FOREACH (DbTable * t, dbc.tablelist) {
+        for (DbTable *t : dbc.tablelist) {
           delete t;
         }
-        dbc.tablelist.clear ();
+        dbc.tablelist.clear();
 
-        endRemoveRows ();
+        endRemoveRows();
       }
       if (dbc.connecterror.isValid ()) {
         beginRemoveRows (createIndex (list.indexOf (&dbc), 0, &dbc),
@@ -532,33 +529,32 @@ class DbList : public QAbstractItemModel {
       }
     }
 
-    void tablelist_load (class DbConnection &dbc) {
-      tablelist_clear (dbc);
+    void tablelist_load(class DbConnection &dbc) {
+      tablelist_clear(dbc);
 
-      if (!dbc.db.isOpen ()) {
+      if (!dbc.db.isOpen()) {
         return;
       }
 
       QVector<DbTable *> newtablelist;
 
-      QStringList tables;
-      tables = dbc.db.tables ();
-      tables.sort (Qt::CaseInsensitive);
-      Q_FOREACH (QString table, tables) {
-        newtablelist.push_back (new DbTable (&dbc, table, 0) );
+      QStringList tables = dbc.db.tables();
+      tables.sort(Qt::CaseInsensitive);
+      for (const QString &table : tables) {
+        newtablelist.push_back(new DbTable(&dbc, table, 0));
       }
 
-      tables = dbc.db.tables (QSql::Views);
-      tables.sort (Qt::CaseInsensitive);
-      Q_FOREACH (QString table, dbc.db.tables (QSql::Views)) {
-        newtablelist.push_back (new DbTable (&dbc, table, 1) );
+      tables = dbc.db.tables(QSql::Views);
+      tables.sort(Qt::CaseInsensitive);
+      for (const QString &table : tables) {
+        newtablelist.push_back(new DbTable(&dbc, table, 1));
       }
 
       if (dbc.dbparam.showsystables) {
-        tables = dbc.db.tables (QSql::SystemTables);
-        tables.sort (Qt::CaseInsensitive);
-        Q_FOREACH (QString table, tables) {
-          newtablelist.push_back (new DbTable (&dbc, table, 2) );
+        tables = dbc.db.tables(QSql::SystemTables);
+        tables.sort(Qt::CaseInsensitive);
+        for (const QString &table : tables) {
+          newtablelist.push_back(new DbTable(&dbc, table, 2));
         }
       }
 
@@ -703,5 +699,3 @@ class DbSchemaModel : public QAbstractTableModel {
       return QVariant ();
     }
 };
-
-#endif // _DbConnection_H_

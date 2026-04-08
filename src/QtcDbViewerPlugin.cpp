@@ -1,99 +1,79 @@
 #include "QtcDbViewerPlugin.h"
 #include "Constants.h"
+#include "QtcDbViewerTr.h"
 #include "WMain.h"
 
-#include <QCoreApplication>
-#include <QTranslator>
-
-#include <QtPlugin>
+#include <QAction>
+#include <QToolButton>
 
 #include <coreplugin/icore.h>
 #include <coreplugin/imode.h>
-#include <utils/icon.h>
-#include <utils/filepath.h>
 #include <coreplugin/actionmanager/actionmanager.h>
+#include <utils/icon.h>
 
-using namespace QtcDbViewer::Internal;
+namespace QtcDbViewer::Internal {
 
-const Utils::Icon MODE_DATABASE_CLASSIC (
-  Utils::FilePath::fromString (QLatin1String (":/icons/database.png")));
+const Utils::Icon MODE_DATABASE_CLASSIC(
+    Utils::FilePath::fromString(QLatin1String(":/icons/database.png")));
 
-static QList<Utils::IconMaskAndColor> flatIconData () {
-  return {{Utils::FilePath::fromString (QLatin1String (":/icons/database_mask.png")), Utils::Theme::IconsBaseColor}};
+static QList<Utils::IconMaskAndColor> flatIconData()
+{
+    return {{Utils::FilePath::fromString(QLatin1String(":/icons/database_mask.png")), Utils::Theme::IconsBaseColor}};
 }
 
-const Utils::Icon MODE_DATABASE_FLAT (flatIconData ());
+const Utils::Icon MODE_DATABASE_FLAT(flatIconData());
 
-QtcDbViewerPlugin::QtcDbViewerPlugin () :
-  IPlugin () {
-}
+QtcDbViewerPlugin::QtcDbViewerPlugin() = default;
 
-QtcDbViewerPlugin::~QtcDbViewerPlugin () {
-}
+QtcDbViewerPlugin::~QtcDbViewerPlugin() = default;
 
-bool QtcDbViewerPlugin::initialize (const QStringList &arguments, QString *errorString) {
-  Q_UNUSED (arguments)
-  Q_UNUSED (errorString)
+void QtcDbViewerPlugin::initialize()
+{
+    auto context = Core::Context(Constants::QTCDBVIEWER_CONTEXT);
 
-  initLanguage ();
+    Core::IMode *dbViewMode = new Core::IMode(this);
+    dbViewMode->setId(Constants::QTCDBVIEWER_ID);
+    dbViewMode->setContext(context);
+    dbViewMode->setDisplayName(Tr::tr("Db Viewer"));
+    dbViewMode->setIcon(Utils::Icon::sideBarIcon(MODE_DATABASE_CLASSIC, MODE_DATABASE_FLAT));
+    dbViewMode->setPriority(10);
+    dbViewMode->setWidgetCreator([context]() -> QWidget * {
+        auto viewer = new WMain;
+        auto buttons = viewer->findChildren<QToolButton *>();
+        for (auto button : buttons) {
+            if (button->toolTip().isEmpty()) {
+                continue;
+            }
+            auto *proxyAction = new QAction(button->toolTip(), button);
+            QObject::connect(proxyAction, &QAction::triggered, button, &QToolButton::click);
 
-  auto context = Core::Context (Constants::QTCDBVIEWER_CONTEXT);
-
-  auto viewer = new WMain;
-  auto buttons = viewer->findChildren<QToolButton *>();
-  for (auto button: buttons) {
-    if (button->toolTip ().isEmpty ()) {
-      continue;
-    }
-    auto *proxyAction = new QAction (button->toolTip (), button);
-    connect (proxyAction, SIGNAL (triggered (bool)), button, SIGNAL (clicked (bool)));
-
-    auto id = Utils::Id::fromString (QStringLiteral ("QtcDbViewer.") + button->objectName ());
-    auto *cmd = Core::ActionManager::registerAction (proxyAction, id, context);
-    cmd->setDefaultKeySequence (button->shortcut ().toString ());
-    button->setShortcut (QString ());
-    connect (cmd, &Core::Command::keySequenceChanged, [button, proxyAction, cmd]() {
-      QString tooltip = proxyAction->text ();
-      if (!cmd->keySequence ().isEmpty ()) {
-        tooltip += QString (QStringLiteral (" (%1)")).arg (cmd->keySequence ().toString ());
-      }
-      button->setToolTip (tooltip);
+            QString idString = QStringLiteral("QtcDbViewer.") + button->objectName();
+            auto id = Utils::Id::fromString(idString);
+            auto *cmd = Core::ActionManager::registerAction(proxyAction, id, context);
+            cmd->setDefaultKeySequence(button->shortcut().toString());
+            button->setShortcut(QKeySequence());
+            QObject::connect(cmd, &Core::Command::keySequenceChanged, [button, proxyAction, cmd]() {
+                QString tooltip = proxyAction->text();
+                if (!cmd->keySequence().isEmpty()) {
+                    tooltip += QString(QStringLiteral(" (%1)")).arg(cmd->keySequence().toString());
+                }
+                button->setToolTip(tooltip);
+            });
+            cmd->keySequenceChanged();
+        }
+        return viewer;
     });
-    cmd->keySequenceChanged ();
-  }
-
-  Core::IMode *dbViewMode = new Core::IMode(this);
-  dbViewMode->setId (Constants::QTCDBVIEWER_ID);
-  dbViewMode->setContext (context);
-  dbViewMode->setDisplayName (tr ("Db Viewer"));
-  dbViewMode->setIcon (Utils::Icon::sideBarIcon (MODE_DATABASE_CLASSIC,
-                                                 MODE_DATABASE_FLAT));
-  dbViewMode->setPriority (10);
-  dbViewMode->setWidget (viewer);
-
-  return true;
 }
 
-void QtcDbViewerPlugin::initLanguage () {
-  const QString &language = Core::ICore::userInterfaceLanguage ();
-  if (!language.isEmpty ()) {
-    QStringList paths;
-    paths << Core::ICore::resourcePath ().toUrlishString ()
-          << Core::ICore::userResourcePath ().toUrlishString ();
-    const QString &trFile = QLatin1String ("QtcDbViewer_") + language;
-    QTranslator *translator = new QTranslator (this);
-    foreach (const QString &path, paths) {
-      if (translator->load (trFile, path + QLatin1String ("/translations"))) {
-        qApp->installTranslator (translator);
-        break;
-      }
-    }
-  }
+void QtcDbViewerPlugin::extensionsInitialized()
+{
 }
 
-void QtcDbViewerPlugin::extensionsInitialized () {
+ExtensionSystem::IPlugin::ShutdownFlag QtcDbViewerPlugin::aboutToShutdown()
+{
+    return SynchronousShutdown;
 }
 
-ExtensionSystem::IPlugin::ShutdownFlag QtcDbViewerPlugin::aboutToShutdown () {
-  return SynchronousShutdown;
-}
+} // namespace QtcDbViewer::Internal
+
+#include <QtcDbViewerPlugin.moc>

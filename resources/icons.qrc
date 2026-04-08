@@ -1,0 +1,34 @@
+<RCC>
+    <qresource prefix="/">
+        <file>icons/addrow.png</file>
+        <file>icons/conn.png</file>
+        <file>icons/copyedit.png</file>
+        <file>icons/database.png</file>
+        <file>icons/database@2x.png</file>
+        <file>icons/database_mask.png</file>
+        <file>icons/database_mask@2x.png</file>
+        <file>icons/delconn.png</file>
+        <file>icons/delrow.png</file>
+        <file>icons/diropen.png</file>
+        <file>icons/download.png</file>
+        <file>icons/edit.png</file>
+        <file>icons/error.png</file>
+        <file>icons/fileload.png</file>
+        <file>icons/filesave.png</file>
+        <file>icons/go.png</file>
+        <file>icons/help.png</file>
+        <file>icons/newconn.png</file>
+        <file>icons/progicon.ico</file>
+        <file>icons/progicon.xcf</file>
+        <file>icons/query.png</file>
+        <file>icons/refresh.png</file>
+        <file>icons/remove.png</file>
+        <file>icons/scheme.png</file>
+        <file>icons/table.png</file>
+        <file>icons/tablesys.png</file>
+        <file>icons/trash.png</file>
+        <file>icons/upload.png</file>
+        <file>icons/view.png</file>
+        <file>icons/world.png</file>
+    </qresource>
+</RCC>

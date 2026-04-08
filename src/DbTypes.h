@@ -4,8 +4,7 @@
 // Conversion tables to display human-readable names for database column types.
 //
 
-#ifndef _DbTypes_H_
-#define _DbTypes_H_
+#pragma once
 
 #include <QObject>
 
@@ -192,9 +191,7 @@ class DbTypes {
         case 2283:  return QStringLiteral ("anyelement");
 
         default:
-          return QObject::tr ("Type %1").arg (t);
+          return QObject::tr("Type %1").arg(t);
       }
     }
 };
-
-#endif // _DbTypes_H_

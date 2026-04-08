@@ -65,14 +65,15 @@ SQLHighlighter::SQLHighlighter (class QTextDocument *parent)
   }
 }
 
-void SQLHighlighter::highlightBlock (const QString &text) {
-  Q_FOREACH (Rule rule, rules) {
+void SQLHighlighter::highlightBlock(const QString &text)
+{
+  for (const Rule &rule : rules) {
     QRegularExpression expr = rule.pattern;
     QRegularExpressionMatch match = expr.match(text);
     while (match.hasMatch()) {
       int index = match.capturedStart();
       int length = match.capturedLength();
-      setFormat (index, length, rule.format);
+      setFormat(index, length, rule.format);
       match = expr.match(text, index + length);
     }
   }

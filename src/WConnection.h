@@ -4,12 +4,11 @@
 // Controller for the connection editing dialog
 //
 
-#ifndef _WConnection_H_
-#define _WConnection_H_
+#pragma once
 
 #include <QDialog>
 #include <QFileDialog>
-#include <QtSql/QSqlDatabase>
+#include <QSqlDatabase>
 
 #include "ui_WConnection.h"
 
@@ -18,63 +17,20 @@
 class WConnection : public QDialog, private Ui::WConnection {
   Q_OBJECT
 
-  QString getDescription (QString drv) {
-    if (0) {
-      return QStringLiteral ("");
-    }
-    else if (drv == QStringLiteral ("QDB2")) {
-      return QStringLiteral ("IBM DB2");
-    }
-    else if (drv == QStringLiteral ("QIBASE")) {
-      return QStringLiteral ("Borland InterBase");
-    }
-    else if (drv == QStringLiteral ("QOCI")) {
-      return QStringLiteral ("Oracle Call Interface");
-    }
-    else if (drv == QStringLiteral ("QODBC")) {
-      return QStringLiteral ("ODBC");
-    }
-    else if (drv == QStringLiteral ("QODBC3")) {
-      return QStringLiteral ("ODBC");
-    }
-    else if (drv == QStringLiteral ("QTDS")) {
-      return QStringLiteral ("Sybase Adaptive Server");
-    }
-
-    else if (drv == QStringLiteral ("QMYSQL")) {
-      return QStringLiteral ("MySQL 4.x");
-    }
-    else if (drv == QStringLiteral ("QMYSQL3")) {
-      return QStringLiteral ("MySQL 3.x");
-    }
-    else if (drv == QStringLiteral ("QPSQL")) {
-      return QStringLiteral ("PostgreSQL 8.x");
-    }
-    else if (drv == QStringLiteral ("QPSQL7")) {
-      return QStringLiteral ("PostgreSQL 7.x");
-    }
-    else if (drv == QStringLiteral ("QSQLITE")) {
-      return QStringLiteral ("SQLite 3.x");
-    }
-    else if (drv == QStringLiteral ("QSQLITE2")) {
-      return QStringLiteral ("SQLite 2.x");
-    }
-    else{return QString(); }
-  }
-
   public:
     WConnection (QWidget *parent, const DbParameter *dbp)
       : QDialog (parent) {
       setupUi (this);
 
-      Q_FOREACH (QString drv, QSqlDatabase::drivers ()) {
-        QString desc = getDescription (drv);
-        if (desc.isNull ()) {
-          comboType->addItem (drv, drv);
-        }
-        else{
-          comboType->addItem (QString (QStringLiteral ("%1 (%2)")).arg (desc).arg (drv),
-                              drv);
+      Q_INIT_RESOURCE(icons);
+
+      for (const QString &drv : QSqlDatabase::drivers()) {
+        QString desc = getDescription(drv);
+        if (desc.isNull()) {
+          comboType->addItem(drv, drv);
+        } else {
+          comboType->addItem(QString(QStringLiteral("%1 (%2)")).arg(desc).arg(drv),
+                            drv);
         }
       }
 
@@ -160,6 +116,51 @@ class WConnection : public QDialog, private Ui::WConnection {
       }
     }
 
+  private:
+    QString getDescription (QString drv) {
+      if (0) {
+        return QStringLiteral ("");
+      }
+      else if (drv == QStringLiteral ("QDB2")) {
+        return QStringLiteral ("IBM DB2");
+      }
+      else if (drv == QStringLiteral ("QIBASE")) {
+        return QStringLiteral ("Borland InterBase");
+      }
+      else if (drv == QStringLiteral ("QOCI")) {
+        return QStringLiteral ("Oracle Call Interface");
+      }
+      else if (drv == QStringLiteral ("QODBC")) {
+        return QStringLiteral ("ODBC");
+      }
+      else if (drv == QStringLiteral ("QODBC3")) {
+        return QStringLiteral ("ODBC");
+      }
+      else if (drv == QStringLiteral ("QTDS")) {
+        return QStringLiteral ("Sybase Adaptive Server");
+      }
+
+      else if (drv == QStringLiteral ("QMYSQL")) {
+        return QStringLiteral ("MySQL 4.x");
+      }
+      else if (drv == QStringLiteral ("QMYSQL3")) {
+        return QStringLiteral ("MySQL 3.x");
+      }
+      else if (drv == QStringLiteral ("QPSQL")) {
+        return QStringLiteral ("PostgreSQL 8.x");
+      }
+      else if (drv == QStringLiteral ("QPSQL7")) {
+        return QStringLiteral ("PostgreSQL 7.x");
+      }
+      else if (drv == QStringLiteral ("QSQLITE")) {
+        return QStringLiteral ("SQLite 3.x");
+      }
+      else if (drv == QStringLiteral ("QSQLITE2")) {
+        return QStringLiteral ("SQLite 2.x");
+      }
+      else{return QString(); }
+    }
+
   public slots:
 
     void on_okButton_clicked () {
@@ -204,8 +205,6 @@ class WConnection : public QDialog, private Ui::WConnection {
       if (filename.isEmpty ()) {
         return;
       }
-      editDatabase->setText (filename);
+      editDatabase->setText(filename);
     }
 };
-
-#endif // _WConnection_H_

@@ -1,31 +1,31 @@
-#ifndef QTCDBVIEWER_H
-#define QTCDBVIEWER_H
+#pragma once
 
 #include "PluginGlobal.h"
+#include "QtcDbViewerTr.h"
 
 #include <extensionsystem/iplugin.h>
 
-namespace QtcDbViewer {
-  namespace Internal {
+namespace QtcDbViewer::Internal {
 
-    class QtcDbViewerPlugin : public ExtensionSystem::IPlugin {
-      Q_OBJECT
+class QtcDbViewerPlugin final : public ExtensionSystem::IPlugin
+{
+    Q_OBJECT
+    Q_PLUGIN_METADATA(IID "org.qt-project.Qt.QtCreatorPlugin" FILE "QtcDbViewer.json")
 
-      public:
-        QtcDbViewerPlugin ();
-        ~QtcDbViewerPlugin ();
+public:
+    QtcDbViewerPlugin();
 
-        bool initialize (const QStringList &arguments, QString *errorString);
-        void extensionsInitialized ();
-        ShutdownFlag aboutToShutdown ();
+    ~QtcDbViewerPlugin() final;
 
-      private:
-        void initLanguage ();
+    void initialize() final;
 
-    };
+    void extensionsInitialized() final;
 
-  } // namespace Internal
-} // namespace QtcDbViewer
+    ExtensionSystem::IPlugin::ShutdownFlag aboutToShutdown() final;
 
-#endif // QTCDBVIEWER_H
+private:
+    void triggerAction();
+};
+
+} // namespace QtcDbViewer::Internal
 

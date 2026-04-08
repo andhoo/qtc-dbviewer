@@ -1,12 +1,14 @@
 {
-    \"Name\" : \"QtcDbViewer\",
-    \"Version\" : \"$$QTCREATOR_VERSION$$VERSION_SUFFIX\",
-    \"CompatVersion\" : \"$$QTCREATOR_COMPAT_VERSION\",
-    \"Experimental\" : true,
-    \"Vendor\" : \"Gres\",
-    \"Copyright\" : \"(C) Gres\",
-    \"License\" : \"MIT license\",
-    \"Description\" : \"Simple SQL database viewer\",
-    \"Url\" : \"http://gres.biz/qtc-dbviewer\",
-    $$dependencyList
+    "Id" : "qtcdbviewer",
+    "Name" : "QtcDbViewer",
+    "Version" : "0.1.0",
+    "CompatVersion" : "0.1.0",
+    "Experimental" : true,
+    "Vendor" : "Gres",
+    "VendorId" : "gres",
+    "Copyright" : "(C) Gres",
+    "License" : "MIT license",
+    "Description" : "Simple SQL database viewer",
+    "Url" : "http://gres.biz/qtc-dbviewer",
+    ${IDE_PLUGIN_DEPENDENCIES}
 }

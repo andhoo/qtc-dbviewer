@@ -15,8 +15,8 @@
    <string>QtSqlView</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="QtSqlView.qrc">
-    <normaloff>:/img/table.png</normaloff>:/img/table.png</iconset>
+   <iconset resource="icons.qrc">
+    <normaloff>:/icons/table.png</normaloff>:/icons/table.png</iconset>
   </property>
   <layout class="QHBoxLayout">
    <property name="spacing">
@@ -59,8 +59,8 @@
       </property>
       <widget class="QWidget" name="tab1">
        <attribute name="icon">
-        <iconset resource="QtSqlView.qrc">
-         <normaloff>:/img/table.png</normaloff>:/img/table.png</iconset>
+        <iconset resource="icons.qrc">
+         <normaloff>:/icons/table.png</normaloff>:/icons/table.png</iconset>
        </attribute>
        <attribute name="title">
         <string>Data</string>
@@ -117,8 +117,8 @@
              <string>Add Row</string>
             </property>
             <property name="icon">
-             <iconset resource="QtSqlView.qrc">
-              <normaloff>:/img/addrow.png</normaloff>:/img/addrow.png</iconset>
+             <iconset resource="icons.qrc">
+              <normaloff>:/icons/addrow.png</normaloff>:/icons/addrow.png</iconset>
             </property>
            </widget>
           </item>
@@ -131,8 +131,8 @@
              <string>Delete Row</string>
             </property>
             <property name="icon">
-             <iconset resource="QtSqlView.qrc">
-              <normaloff>:/img/delrow.png</normaloff>:/img/delrow.png</iconset>
+             <iconset resource="icons.qrc">
+              <normaloff>:/icons/delrow.png</normaloff>:/icons/delrow.png</iconset>
             </property>
            </widget>
           </item>
@@ -145,8 +145,8 @@
              <string>Copy Selected Cells</string>
             </property>
             <property name="icon">
-             <iconset resource="QtSqlView.qrc">
-              <normaloff>:/img/copyedit.png</normaloff>:/img/copyedit.png</iconset>
+             <iconset resource="icons.qrc">
+              <normaloff>:/icons/copyedit.png</normaloff>:/icons/copyedit.png</iconset>
             </property>
            </widget>
           </item>
@@ -172,8 +172,8 @@
              <string>Refresh</string>
             </property>
             <property name="icon">
-             <iconset resource="QtSqlView.qrc">
-              <normaloff>:/img/refresh.png</normaloff>:/img/refresh.png</iconset>
+             <iconset resource="icons.qrc">
+              <normaloff>:/icons/refresh.png</normaloff>:/icons/refresh.png</iconset>
             </property>
             <property name="shortcut">
              <string>F5</string>
@@ -189,8 +189,8 @@
              <string>Save Changes</string>
             </property>
             <property name="icon">
-             <iconset resource="QtSqlView.qrc">
-              <normaloff>:/img/edit.png</normaloff>:/img/edit.png</iconset>
+             <iconset resource="icons.qrc">
+              <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
             </property>
            </widget>
           </item>
@@ -203,8 +203,8 @@
              <string>Revert Changes</string>
             </property>
             <property name="icon">
-             <iconset resource="QtSqlView.qrc">
-              <normaloff>:/img/trash.png</normaloff>:/img/trash.png</iconset>
+             <iconset resource="icons.qrc">
+              <normaloff>:/icons/trash.png</normaloff>:/icons/trash.png</iconset>
             </property>
            </widget>
           </item>
@@ -214,8 +214,8 @@
       </widget>
       <widget class="QWidget" name="tab2">
        <attribute name="icon">
-        <iconset resource="QtSqlView.qrc">
-         <normaloff>:/img/scheme.png</normaloff>:/img/scheme.png</iconset>
+        <iconset resource="icons.qrc">
+         <normaloff>:/icons/scheme.png</normaloff>:/icons/scheme.png</iconset>
        </attribute>
        <attribute name="title">
         <string>Schema</string>
@@ -247,8 +247,8 @@
       </widget>
       <widget class="QWidget" name="tab3">
        <attribute name="icon">
-        <iconset resource="QtSqlView.qrc">
-         <normaloff>:/img/query.png</normaloff>:/img/query.png</iconset>
+        <iconset resource="icons.qrc">
+         <normaloff>:/icons/query.png</normaloff>:/icons/query.png</iconset>
        </attribute>
        <attribute name="title">
         <string>Query</string>
@@ -330,8 +330,8 @@
                  <string>Execute Query</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="QtSqlView.qrc">
-                  <normaloff>:/img/go.png</normaloff>:/img/go.png</iconset>
+                 <iconset resource="icons.qrc">
+                  <normaloff>:/icons/go.png</normaloff>:/icons/go.png</iconset>
                 </property>
                 <property name="shortcut">
                  <string>Ctrl+R</string>
@@ -347,8 +347,8 @@
                  <string>Copy Selected Cells</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="QtSqlView.qrc">
-                  <normaloff>:/img/copyedit.png</normaloff>:/img/copyedit.png</iconset>
+                 <iconset resource="icons.qrc">
+                  <normaloff>:/icons/copyedit.png</normaloff>:/icons/copyedit.png</iconset>
                 </property>
                 <property name="shortcut">
                  <string>Ctrl+C</string>
@@ -364,8 +364,8 @@
                  <string>Save result to file</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="QtSqlView.qrc">
-                  <normaloff>:/img/filesave.png</normaloff>:/img/filesave.png</iconset>
+                 <iconset resource="icons.qrc">
+                  <normaloff>:/icons/filesave.png</normaloff>:/icons/filesave.png</iconset>
                 </property>
                 <property name="shortcut">
                  <string>Ctrl+E</string>
@@ -381,8 +381,8 @@
                  <string>Clear result</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="QtSqlView.qrc">
-                  <normaloff>:/img/trash.png</normaloff>:/img/trash.png</iconset>
+                 <iconset resource="icons.qrc">
+                  <normaloff>:/icons/trash.png</normaloff>:/icons/trash.png</iconset>
                 </property>
                </widget>
               </item>
@@ -408,8 +408,8 @@
                  <string>Clear Query</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="QtSqlView.qrc">
-                  <normaloff>:/img/trash.png</normaloff>:/img/trash.png</iconset>
+                 <iconset resource="icons.qrc">
+                  <normaloff>:/icons/trash.png</normaloff>:/icons/trash.png</iconset>
                 </property>
                 <property name="shortcut">
                  <string>Ctrl+W</string>
@@ -425,8 +425,8 @@
                  <string>Load Query</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="QtSqlView.qrc">
-                  <normaloff>:/img/fileload.png</normaloff>:/img/fileload.png</iconset>
+                 <iconset resource="icons.qrc">
+                  <normaloff>:/icons/fileload.png</normaloff>:/icons/fileload.png</iconset>
                 </property>
                 <property name="shortcut">
                  <string>Ctrl+L</string>
@@ -442,8 +442,8 @@
                  <string>Save Query to Text File</string>
                 </property>
                 <property name="icon">
-                 <iconset resource="QtSqlView.qrc">
-                  <normaloff>:/img/filesave.png</normaloff>:/img/filesave.png</iconset>
+                 <iconset resource="icons.qrc">
+                  <normaloff>:/icons/filesave.png</normaloff>:/icons/filesave.png</iconset>
                 </property>
                 <property name="shortcut">
                  <string>Ctrl+S</string>
@@ -509,8 +509,8 @@
   </layout>
   <action name="action_AddConnection">
    <property name="icon">
-    <iconset resource="QtSqlView.qrc">
-     <normaloff>:/img/newconn.png</normaloff>:/img/newconn.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/newconn.png</normaloff>:/icons/newconn.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Add Connection</string>
@@ -523,8 +523,8 @@
   </action>
   <action name="action_RemoveConnection">
    <property name="icon">
-    <iconset resource="QtSqlView.qrc">
-     <normaloff>:/img/delconn.png</normaloff>:/img/delconn.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/delconn.png</normaloff>:/icons/delconn.png</iconset>
    </property>
    <property name="text">
     <string>&amp;Remove Connection</string>
@@ -532,8 +532,8 @@
   </action>
   <action name="action_About">
    <property name="icon">
-    <iconset resource="QtSqlView.qrc">
-     <normaloff>:/img/help.png</normaloff>:/img/help.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/help.png</normaloff>:/icons/help.png</iconset>
    </property>
    <property name="text">
     <string>&amp;About</string>
@@ -541,8 +541,8 @@
   </action>
   <action name="action_EditConnection">
    <property name="icon">
-    <iconset resource="QtSqlView.qrc">
-     <normaloff>:/img/conn.png</normaloff>:/img/conn.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/conn.png</normaloff>:/icons/conn.png</iconset>
    </property>
    <property name="text">
     <string>Edit Connection</string>
@@ -550,8 +550,8 @@
   </action>
   <action name="action_AddRow">
    <property name="icon">
-    <iconset resource="QtSqlView.qrc">
-     <normaloff>:/img/addrow.png</normaloff>:/img/addrow.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/addrow.png</normaloff>:/icons/addrow.png</iconset>
    </property>
    <property name="text">
     <string>Add Row</string>
@@ -559,8 +559,8 @@
   </action>
   <action name="action_DelRow">
    <property name="icon">
-    <iconset resource="QtSqlView.qrc">
-     <normaloff>:/img/delrow.png</normaloff>:/img/delrow.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/delrow.png</normaloff>:/icons/delrow.png</iconset>
    </property>
    <property name="text">
     <string>Delete Row</string>
@@ -568,8 +568,8 @@
   </action>
   <action name="action_RevertData">
    <property name="icon">
-    <iconset resource="QtSqlView.qrc">
-     <normaloff>:/img/trash.png</normaloff>:/img/trash.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/trash.png</normaloff>:/icons/trash.png</iconset>
    </property>
    <property name="text">
     <string>Revert Changes</string>
@@ -577,8 +577,8 @@
   </action>
   <action name="action_SaveData">
    <property name="icon">
-    <iconset resource="QtSqlView.qrc">
-     <normaloff>:/img/edit.png</normaloff>:/img/edit.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
    </property>
    <property name="text">
     <string>Save Changes</string>
@@ -591,8 +591,8 @@
   </action>
   <action name="action_RefreshData">
    <property name="icon">
-    <iconset resource="QtSqlView.qrc">
-     <normaloff>:/img/refresh.png</normaloff>:/img/refresh.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/refresh.png</normaloff>:/icons/refresh.png</iconset>
    </property>
    <property name="text">
     <string>Refresh Data</string>
@@ -600,8 +600,8 @@
   </action>
   <action name="action_RefreshTablelist">
    <property name="icon">
-    <iconset resource="QtSqlView.qrc">
-     <normaloff>:/img/refresh.png</normaloff>:/img/refresh.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/refresh.png</normaloff>:/icons/refresh.png</iconset>
    </property>
    <property name="text">
     <string>Refresh Table List</string>
@@ -614,8 +614,8 @@
   </action>
   <action name="action_VisitWebsite">
    <property name="icon">
-    <iconset resource="QtSqlView.qrc">
-     <normaloff>:/img/world.png</normaloff>:/img/world.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/world.png</normaloff>:/icons/world.png</iconset>
    </property>
    <property name="text">
     <string>Visit Website</string>
@@ -623,8 +623,8 @@
   </action>
   <action name="action_DownloadRaw">
    <property name="icon">
-    <iconset resource="QtSqlView.qrc">
-     <normaloff>:/img/download.png</normaloff>:/img/download.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/download.png</normaloff>:/icons/download.png</iconset>
    </property>
    <property name="text">
     <string>Download raw</string>
@@ -635,8 +635,8 @@
   </action>
   <action name="action_UploadRaw">
    <property name="icon">
-    <iconset resource="QtSqlView.qrc">
-     <normaloff>:/img/upload.png</normaloff>:/img/upload.png</iconset>
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/upload.png</normaloff>:/icons/upload.png</iconset>
    </property>
    <property name="text">
     <string>Upload Raw</string>
@@ -647,7 +647,7 @@
   </action>
  </widget>
  <resources>
-  <include location="QtSqlView.qrc"/>
+  <include location="icons.qrc"/>
  </resources>
  <connections/>
 </ui>

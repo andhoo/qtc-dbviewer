@@ -4,10 +4,9 @@
 // SQL syntax highlight plugin for QTextEdit
 //
 
-#ifndef _SQLHighlighter_H_
-#define _SQLHighlighter_H_
+#pragma once
 
-#include <QtCore/QVector>
+#include <QVector>
 #include <QRegularExpression>
 
 #include <QtGui/QSyntaxHighlighter>
@@ -42,5 +41,3 @@ class SQLHighlighter : public QSyntaxHighlighter {
 
     QTextCharFormat commentFormat;
 };
-
-#endif // _SQLHighlighter_H_

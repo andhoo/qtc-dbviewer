@@ -14,8 +14,8 @@
    <string>Connection Properties</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="QtSqlView.qrc">
-    <normaloff>:/img/conn.png</normaloff>:/img/conn.png</iconset>
+   <iconset resource="icons.qrc">
+    <normaloff>:/icons/conn.png</normaloff>:/icons/conn.png</iconset>
   </property>
   <layout class="QVBoxLayout">
    <property name="spacing">
@@ -93,8 +93,8 @@
          <string>Select File</string>
         </property>
         <property name="icon">
-         <iconset resource="QtSqlView.qrc">
-          <normaloff>:/img/diropen.png</normaloff>:/img/diropen.png</iconset>
+         <iconset resource="icons.qrc">
+          <normaloff>:/icons/diropen.png</normaloff>:/icons/diropen.png</iconset>
         </property>
        </widget>
       </item>
@@ -277,7 +277,7 @@
   <tabstop>cancelButton</tabstop>
  </tabstops>
  <resources>
-  <include location="QtSqlView.qrc"/>
+  <include location="icons.qrc"/>
  </resources>
  <connections>
   <connection>

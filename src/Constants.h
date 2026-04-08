@@ -1,14 +1,9 @@
-#ifndef QTCDBVIEWERCONSTANTS_H
-#define QTCDBVIEWERCONSTANTS_H
+#pragma once
 
-namespace QtcDbViewer {
-  namespace Constants {
+namespace QtcDbViewer::Constants {
 
-    const char QTCDBVIEWER_ID[] = "QtcDbViewer.Mode";
-    const char QTCDBVIEWER_CONTEXT[] = "QtcDbViewer.Context";
+const char QTCDBVIEWER_ID[] = "QtcDbViewer.Mode";
+const char QTCDBVIEWER_CONTEXT[] = "QtcDbViewer.Context";
 
-  } // namespace QtcDbViewer
-} // namespace Constants
-
-#endif // QTCDBVIEWERCONSTANTS_H
+} // namespace QtcDbViewer::Constants
 

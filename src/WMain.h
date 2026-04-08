@@ -5,12 +5,12 @@
 // all tabs.
 //
 
-#ifndef _WMain_H_
-#define _WMain_H_
+#pragma once
 
 #include <QWidget>
 #include <QFileDialog>
-#include <QtGui/QClipboard>
+#include <QGuiApplication>
+#include <QClipboard>
 #include <QMenu>
 
 #include <QtCore/QDebug>
@@ -56,6 +56,8 @@ class WMain : public QWidget, public Ui::WMain {
       : QWidget (),
       datatablemodel (NULL) {
       setupUi (this);
+
+      Q_INIT_RESOURCE(icons);
 
       dblist.loadFromSettings ();
 
@@ -441,8 +443,8 @@ class WMain : public QWidget, public Ui::WMain {
 
       QString seltext;
 
-      Q_FOREACH (const QItemSelectionRange &selrange, sellist) {
-        if (!query.seek (selrange.top ())) {
+      for (const QItemSelectionRange &selrange : sellist) {
+        if (!query.seek(selrange.top())) {
           qDebug () << tr ("Could not seek in result");
           continue;
         }
@@ -675,9 +677,7 @@ class WMain : public QWidget, public Ui::WMain {
         return;
       }
 
-      QTextStream out (&file);
-      out << editQuery->toPlainText ().toLocal8Bit ();
+      QTextStream out(&file);
+      out << editQuery->toPlainText().toLocal8Bit();
     }
 };
-
-#endif // _WMain_H_
